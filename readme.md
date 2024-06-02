@@ -15,6 +15,8 @@ cp -rf target/hlcasestudy.war $WILDFLY_HOME/standalone/deployments
 ```
 curl http://localhost:8080/hlcasestudy/rest/useraccounts
 
+curl http://localhost:8080/hlcasestudy/rest/useraccounts/1
+
 curl 'http://localhost:8080/hlcasestudy/rest/useraccounts/?pageSize=2&page=1'
 
 curl -X POST http://localhost:8080/hlcasestudy/rest/useraccounts  -H 'Content-Type: application/json' -d '{"username":"szymon", "age": 36, "gender": "MALE"}'
