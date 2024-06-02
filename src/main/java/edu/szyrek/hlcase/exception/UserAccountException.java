@@ -1,4 +1,4 @@
-package com.mastertheboss.jaxrs;
+package edu.szyrek.hlcase.exception;
 
 public class UserAccountException extends RuntimeException{
 

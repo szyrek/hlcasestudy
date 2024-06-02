@@ -1,5 +1,6 @@
-package com.mastertheboss.jaxrs;
+package edu.szyrek.hlcase.model;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -25,7 +26,8 @@ public class UserAccount {
     private String username;
     @Column
     @NotNull
-    @Min(value = 18)
+    @Min(value = 1)
+    @Max(value = 200)
     private Long age;
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -33,7 +35,6 @@ public class UserAccount {
     private Gender gender;
     @Column
     private Date creationTime;
-
     @PrePersist
     void createdAt() {
         this.creationTime = new Date();

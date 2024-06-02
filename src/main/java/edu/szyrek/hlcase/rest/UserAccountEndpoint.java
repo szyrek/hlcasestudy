@@ -1,5 +1,7 @@
-package com.mastertheboss.jaxrs;
+package edu.szyrek.hlcase.rest;
 
+import edu.szyrek.hlcase.dao.UserAccountRepository;
+import edu.szyrek.hlcase.model.UserAccount;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -17,12 +19,19 @@ public class UserAccountEndpoint {
     UserAccountRepository userAccountRepository;
 
     @GET
-    public List<UserAccount> getAll() {
+    public List<UserAccount> getAll(
+            @QueryParam("pageSize") Integer pageSize,
+            @QueryParam("page") Integer page
+            ){
+        if (page != null && pageSize != null) {
+            return userAccountRepository.findAll(pageSize, page);
+        }
         return userAccountRepository.findAll();
     }
 
     @GET
-    public UserAccount get(Long id) {
+    @Path("/{id}")
+    public UserAccount get(@PathParam("id") Long id) {
         return userAccountRepository.findUserAccountById(id);
     }
 
@@ -38,7 +47,8 @@ public class UserAccountEndpoint {
         return Response.status(204).build();
     }
     @DELETE
-    public Response delete(@QueryParam("id") Long id) {
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Long id) {
         userAccountRepository.deleteUserAccount(id);
         return Response.status(204).build();
     }

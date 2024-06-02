@@ -1,6 +1,7 @@
-package com.mastertheboss.jaxrs;
+package edu.szyrek.hlcase.dao;
 
 
+import edu.szyrek.hlcase.model.UserAccount;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
@@ -23,6 +24,13 @@ public class UserAccountRepository {
                 .getResultList();
     }
 
+    public List<UserAccount> findAll(Integer pageSize, Integer page) {
+        return entityManager.createNamedQuery("UserAccounts.findAll", UserAccount.class)
+                .setFirstResult(((page-1) * pageSize))
+                .setMaxResults(pageSize)
+                .getResultList();
+    }
+
     public UserAccount findUserAccountById(Long id) {
 
         UserAccount userAccount = entityManager.find(UserAccount.class, id);
@@ -34,9 +42,13 @@ public class UserAccountRepository {
     }
     @Transactional
     public void updateUserAccount(UserAccount userAccount) {
-
         UserAccount userAccountToUpdate = findUserAccountById(userAccount.getId());
-        userAccountToUpdate.setUsername(userAccount.getUsername());
+        if (userAccount.getGender() != null) {
+            userAccountToUpdate.setGender(userAccount.getGender());
+        }
+        if (userAccount.getAge() != null) {
+            userAccountToUpdate.setAge(userAccount.getAge());
+        }
     }
     @Transactional
     public void createUserAccount(UserAccount userAccount) {

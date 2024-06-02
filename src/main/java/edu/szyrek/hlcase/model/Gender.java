@@ -1,4 +1,4 @@
-package com.mastertheboss.jaxrs;
+package edu.szyrek.hlcase.model;
 
 public enum Gender {
     MALE,
